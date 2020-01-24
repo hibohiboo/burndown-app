@@ -24,3 +24,5 @@ yarn-error.log*
 
 .vagrant
 .env
+*.log
+*.retry
