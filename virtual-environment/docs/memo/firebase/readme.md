@@ -64,4 +64,26 @@ echo $FIREBASE_PROJECT_NAME
   * REACT_APP_FIREBSE_API_KEY「プロジェクトの設定 > 全般 > ウェブAPIキー」
   * REACT_APP_FIREBSE_AUTH_DOMAIN 「Hosting > ダッシュボード > ドメイン」
 
+## firestore
+
+### firestoreの使用開始
+
+* コンソールにログインする
+* データベースの使用開始から、firestoreを選択
+* ルールを選択する。
+* ロケーションを選択する。後から変更不可。東京は「asia-northeast1」
+
+### ルールのデプロイ
+
+* テストが終わって運用するときには、セキュリティ対策を行う必要がある。
+
+```
+./bin/rules_update.sh
+```
+
+
+## 参考
+
 [JavaScript で Google ログインを使用して認証する](https://firebase.google.com/docs/auth/web/google-signin?hl=ja)
+[Cloud Firestore セキュリティ ルールを使ってみる](https://firebase.google.com/docs/firestore/security/get-started?hl=ja)
+[Cloud Functions のロケーション](https://firebase.google.com/docs/functions/locations?hl=ja)

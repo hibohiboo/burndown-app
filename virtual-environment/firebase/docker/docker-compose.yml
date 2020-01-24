@@ -8,7 +8,7 @@ services:
       - ../../../build:/app/build
       - ../../../firebase.json:/app/firebase.json
       - ../../../.firebaserc:/app/.firebaserc
-      # - ../../../firestore.rules:/app/firestore.rules
+      - ../../../firestore.rules:/app/firestore.rules
       # - ../../../firestore.indexes.json:/app/firestore.indexes.json
       # - ../../../storage.rules:/app/storage.rules
       # - ../../../database.rules.json:/app/database.rules.json
