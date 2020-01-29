@@ -3,7 +3,8 @@
   "parser": "babel-eslint",
   "plugins": ["react"],
   "rules": {
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-param-reassign": [ "error", { "props": true, "ignorePropertyModificationsFor": [ "draft"] } ]
   },
   "env": {
     "browser": true,

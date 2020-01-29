@@ -1,3 +1,4 @@
+import produce from 'immer';
 import {
   EDIT_TASK, DELETE_TASK, ADD_TASK, EDIT_VELOCITY, ADD_SPRINT,
   DELETE_SPRINT, UPDATE_DATA, INIT_USER,
@@ -12,101 +13,80 @@ const setTaskIDHelper = (array) => Object.assign([], array.map((data, index) => 
   return { ...data, id: `data${id}` };
 }));
 
-function rootReducer(state = init, action) {
+const rootReducer = produce((draft = init, action) => {
+  if (draft.loginUser) {
+    draft.updatedUid = draft.loginUser.uid;
+  }
+
   // タスク編集時
   if (action.type === EDIT_TASK) {
-    return {
-      ...state,
-      datas: Object.assign([], state.datas.map((data) => {
-        if (data.id === action.payload.id) {
-          return { ...data, ...action.payload };
-        }
-        return data;
-      })),
-      updatedUid: state.loginUser.uid,
-    };
+    draft.datas = draft.datas.map((data) => {
+      if (data.id === action.payload.id) {
+        return { ...data, ...action.payload };
+      }
+      return data;
+    });
+    return draft;
   }
 
   // タスク削除時
   if (action.type === DELETE_TASK) {
-    return {
-      ...state,
-      datas: setTaskIDHelper(state.datas.filter((data) => (data.id !== action.payload.id))),
-      updatedUid: state.loginUser.uid,
-    };
+    draft.datas = setTaskIDHelper(draft.datas.filter((data) => (data.id !== action.payload.id)));
+    return draft;
   }
 
   // タスク追加時
   if (action.type === ADD_TASK) {
-    return {
-      ...state,
-      datas: setTaskIDHelper(state.datas.concat(initialData)),
-      updatedUid: state.loginUser.uid,
-    };
+    draft.datas = setTaskIDHelper(draft.datas.concat(initialData));
+    return draft;
   }
 
   // velocity編集時
   if (action.type === EDIT_VELOCITY) {
-    return {
-      ...state,
-      updatedUid: state.loginUser.uid,
-      sprints: Object.assign([], state.sprints.map((sprint) => {
-        if (sprint.id === action.payload.id) {
-          return { ...sprint, ...action.payload };
-        }
-        return sprint;
-      })),
-    };
+    draft.sprints = draft.sprints.map((sprint) => {
+      if (sprint.id === action.payload.id) {
+        return { ...sprint, ...action.payload };
+      }
+      return sprint;
+    });
+    return draft;
   }
 
   // sprint追加時
   if (action.type === ADD_SPRINT) {
-    return {
-      ...state,
-      updatedUid: state.loginUser.uid,
-      sprints: Object.assign([], state.sprints.concat({
-        id: `id${state.sprints.length + 1}`,
-        start: '',
-        end: '',
-        planningCapacity: '0',
-        resultCapacity: '0',
-        velocity: '',
-      })),
-    };
+    draft.sprints = draft.sprints.concat({
+      id: draft.sprints.map((x) => x.id).reduce((max, cur) => Math.max(max, cur), 0) + 1,
+      start: '',
+      end: '',
+      planningCapacity: '0',
+      resultCapacity: '0',
+      velocity: '',
+    });
   }
-
   // sprint削除時
   if (action.type === DELETE_SPRINT) {
-    return {
-      ...state,
-      sprints: Object.assign([], state.sprints.slice(0, state.sprints.length - 1)),
-      updatedUid: state.loginUser.uid,
-    };
+    draft.sprints = draft.sprints.slice(0, draft.sprints.length - 1);
+    return draft;
   }
-
   // firestoreからデータ読込時
   if (action.type === UPDATE_DATA) {
     const { sprints, datas, updatedUid } = action.payload;
-    return {
-      ...state,
-      sprints: sprints.map((x) => x),
-      datas: datas.map((x) => x),
-      updatedUid,
-    };
+    draft.sprints = sprints;
+    draft.datas = datas;
+    draft.updatedUid = updatedUid;
+    return draft;
   }
 
   // ログインユーザのUIDを保存
   if (action.type === INIT_USER) {
     const { uid } = action.payload;
-    return {
-      ...state,
-      loginUser: { uid },
-      updatedUid: uid,
-    };
+    draft.loginUser = { uid };
+    draft.updateUid = uid;
+    return draft;
   }
 
   // 初期表示
-  return state;
-}
+  return draft;
+});
 
 export default rootReducer;
