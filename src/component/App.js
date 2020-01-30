@@ -28,13 +28,13 @@ const App = () => (
         <Route exact path="/">
           <Redirect to="/burndown" />
         </Route>
-        <Route path="/burndown">
+        <Route path="/:roomId/burndown">
           <AppBurnDownView />
         </Route>
-        <Route path="/velocity">
+        <Route path="/:roomId/velocity">
           <AppVelocityView />
         </Route>
-        <Route path="/taskboard">
+        <Route path="/:roomId/taskboard">
           <AppTaskBoardView />
         </Route>
         <Route path="/test">
