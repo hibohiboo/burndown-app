@@ -24,6 +24,7 @@ function init(uid) {
 
 // 認証済かチェック
 auth.onAuthStateChanged((payload) => {
+  // 認証していなかったらログイン画面を表示
   if (!payload) {
     loginUi(auth);
     return;
