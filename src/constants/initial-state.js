@@ -8,6 +8,7 @@ export const initialData = {
 };
 
 export const initialState = {
+  currentTask: 0,
   // TEST DATA
   datas: [
     {
