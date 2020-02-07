@@ -1,0 +1,28 @@
+version: "3"
+services:
+  # デプロイツール
+  firebase:
+    build: ./firebase
+    env_file: .env
+    volumes:
+      - ../../../build:/app/build
+      - ../../../firebase.json:/app/firebase.json
+      - ../../../.firebaserc:/app/.firebaserc
+      - ../../../firestore.rules:/app/firestore.rules
+      # - ../../../firestore.indexes.json:/app/firestore.indexes.json
+      # - ../../../storage.rules:/app/storage.rules
+      # - ../../../database.rules.json:/app/database.rules.json
+
+  # functions-デプロイツール
+  firebase-functions:
+    build: ./firebase-functions
+    env_file: .env
+    volumes:
+      - ../../../build:/app/build
+      - ../../../firebase.json:/app/firebase.json
+      - ../../../.firebaserc:/app/.firebaserc
+      - ../../../firestore.rules:/app/firestore.rules
+      - ../../../firebase-functions/functions/.eslintrc.json:/app/functions/.eslintrc.json
+      - ../../../firebase-functions/functions/index.js:/app/functions/index.js
+      - ../../../firebase-functions/functions/package.json:/app/functions/package.json
+
