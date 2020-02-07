@@ -6,15 +6,13 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import * as serviceWorker from './serviceWorker';
-import Store from './store/index';
-import App from './component/App';
+import App from './components/App';
 
 library.add(fab, fas, far);
 
 render(
-  <Provider store={Store}>
     <App />
-  </Provider>,
+,
   document.getElementById('root'),
 );
 
