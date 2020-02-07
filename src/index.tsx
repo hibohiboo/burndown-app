@@ -7,12 +7,15 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
+import store from './store';
 
 library.add(fab, fas, far);
 
 render(
+  <Provider store={store}>
     <App />
-,
+  </Provider>
+  ,
   document.getElementById('root'),
 );
 

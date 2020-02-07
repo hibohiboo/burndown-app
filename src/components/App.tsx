@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router, Switch, Route, Link, Redirect,
 } from 'react-router-dom';
 import Helmet from 'react-helmet';
+import AppBurnDownView from './AppBurnDownView';
 
 const App: React.FC = () => {
   return   <div className="App">
@@ -20,8 +21,12 @@ const App: React.FC = () => {
       <Link to="/taskboard">TaskBoard</Link>
     </header>
     <Switch>
+
       <Route exact path="/">
         <Redirect to="/burndown" />
+      </Route>
+      <Route path="/burndown">
+          <AppBurnDownView />
       </Route>
       <Route path="/*">
         <p>404</p>
