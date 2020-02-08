@@ -1,8 +1,7 @@
-
 export type Sprint = {
   id: number;
-  start: Date | null;
-  end: Date | null;
+  start: string;
+  end: string | null;
   planningCapacity: number;
   resultCapacity: number;
   velocity: number;

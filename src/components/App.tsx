@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import AppBurnDownView from './burndown/AppBurnDownView';
+import AppVelocityView from './AppVelocityView';
 
 const App: React.FC = () => {
   return   <div className="App">
@@ -26,7 +27,10 @@ const App: React.FC = () => {
         <Redirect to="/burndown" />
       </Route>
       <Route path="/burndown">
-          <AppBurnDownView />
+        <AppBurnDownView />
+      </Route>
+      <Route path="/velocity">
+        <AppVelocityView />
       </Route>
       <Route path="/*">
         <p>404</p>
