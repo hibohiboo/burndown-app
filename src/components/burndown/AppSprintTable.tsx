@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import sprintModule, { useSprints } from '../modules/sprintModule';
-import '../css/AppSprintTable.css';
+import sprintModule, { useSprints } from '../../modules/sprintModule';
+import '../../css/AppSprintTable.css';
 
 const AppSprintTable = () => {
   const dispatch = useDispatch();

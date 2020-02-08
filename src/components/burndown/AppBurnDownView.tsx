@@ -2,7 +2,7 @@ import React from 'react';
 import AppTaskTable from './AppTaskTable';
 import AppLineChart from './AppLineChart';
 import AppSprintTable from './AppSprintTable';
-import '../css/AppBurnDownView.css';
+import '../../css/AppBurnDownView.css';
 
 const AppBurnDownView = () => (
   <div className="burndown-layout">

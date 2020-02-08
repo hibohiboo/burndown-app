@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Chart, {velocityAverageHelper} from '@/components/AppLineChart';
+import Chart, {velocityAverageHelper} from '@/components/burndown/AppLineChart';
 
 test('latest 3 average', () => {
   const sprints = getSprints();

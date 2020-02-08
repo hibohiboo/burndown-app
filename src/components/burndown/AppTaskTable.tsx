@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useSprints } from '../modules/sprintModule';
-import taskModule, { useTasks } from '../modules/taskModule';
-import COLORS from '../constants/tag-colors';
-import '../css/AppTaskTable.css';
+import { useSprints } from '../../modules/sprintModule';
+import taskModule, { useTasks } from '../../modules/taskModule';
+import COLORS from '../../constants/tag-colors';
+import '../../css/AppTaskTable.css';
 
 const AppTaskTable = () => {
   const dispatch = useDispatch();

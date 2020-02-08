@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router, Switch, Route, Link, Redirect,
 } from 'react-router-dom';
 import Helmet from 'react-helmet';
-import AppBurnDownView from './AppBurnDownView';
+import AppBurnDownView from './burndown/AppBurnDownView';
 
 const App: React.FC = () => {
   return   <div className="App">

@@ -1,10 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
-import { Task } from '../@types/task';
-import { Sprint } from '../@types/sprint';
-import sprintModule, { useSprints } from '../modules/sprintModule';
-import taskModule, { useTasks } from '../modules/taskModule';
+import { Task } from '../../@types/task';
+import { Sprint } from '../../@types/sprint';
+import { useSprints } from '../../modules/sprintModule';
+import { useTasks } from '../../modules/taskModule';
 
 // Average velocity of the last 3 sprints
 const latestNumber = 3;
