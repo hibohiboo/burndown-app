@@ -27,5 +27,8 @@ const taskModule = createSlice({
 export const useTasks = () => {
   return useSelector((state: { tasks: ReturnType<typeof taskModule.reducer> }) => state.tasks);
 }
+export const useTask = (id: number) => {
+  return useSelector((state: { tasks: ReturnType<typeof taskModule.reducer> }) => state.tasks.find(t=>t.id === id));
+}
 
 export default taskModule;

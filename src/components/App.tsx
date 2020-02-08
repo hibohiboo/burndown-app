@@ -5,6 +5,7 @@ import {
 import Helmet from 'react-helmet';
 import AppBurnDownView from './burndown/AppBurnDownView';
 import AppVelocityView from './AppVelocityView';
+import AppTaskBoardView from './taskborad/AppTaskBoardView';
 
 const App: React.FC = () => {
   return   <div className="App">
@@ -32,6 +33,9 @@ const App: React.FC = () => {
       <Route path="/velocity">
         <AppVelocityView />
       </Route>
+      <Route path="/taskboard">
+        <AppTaskBoardView />
+        </Route>
       <Route path="/*">
         <p>404</p>
       </Route>
