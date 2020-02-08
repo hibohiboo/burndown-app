@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Sprint } from '../@types/sprint';
 
 // id auto increment
-const getSprintIDHelper = (sprints:Sprint[]):number => (sprints.map(t=>t.id).reduce((prev, current)=> (prev > current ? prev : current), 0 ) + 1);
+const getSprintIDHelper = (sprints:Sprint[]):number => sprints.length === 0 ? 0 : (sprints.map(t=>t.id).reduce((prev, current)=> (prev > current ? prev : current), 0 ) + 1);
 
 const initialState = [] as Sprint[];
 
@@ -19,7 +19,7 @@ const sprintModule = createSlice({
         end: null,
         planningCapacity: 0,
         resultCapacity: 0,
-        velocity: 0
+        velocity: -1
       });
     },
     editSprint: (state, action: PayloadAction<Sprint>) => {

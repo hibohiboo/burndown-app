@@ -7,8 +7,9 @@ import sprintModule, { useSprints } from '../modules/sprintModule';
 import taskModule, { useTasks } from '../modules/taskModule';
 
 // Average velocity of the last 3 sprints
+const latestNumber = 3;
 export const velocityAverageHelper = (sprints: Sprint[]): number => { 
-  const latests = sprints.filter(s=>s.velocity >= 0 ).slice(-3);
+  const latests = sprints.filter(s=>s.velocity > -1 ).slice(-latestNumber);
 
   if (latests.length === 0) {
     return 0;
@@ -17,38 +18,31 @@ export const velocityAverageHelper = (sprints: Sprint[]): number => {
   return Math.round(sum / latests.length);
 };
 
-const chartDataHelper = (average: number, totalPoint: number, datas: Task[]) => {
-  const chartDatas = [];
-  chartDatas.push(totalPoint);
-
+const chartDataHelper = (tasks: Task[], sprints: Sprint[]) => {
+  let totalPoint = tasks.map(t=>t.point).reduce((sum, n) => sum + n, 0);
+  const average = velocityAverageHelper(sprints);
   let remainingTaskPoint = totalPoint;
-  const tmpArr = new Array(datas.length).fill(0);
-  let maxsprint = 0;
-  datas.forEach((data) => {
-    if (data.sprint) {
-      tmpArr[data.sprint] += data.point;
-      if (maxsprint < data.sprint) maxsprint = data.sprint;
+  return sprints.map(s=> {
+    if (remainingTaskPoint === 0 ) return 0;
+
+    remainingTaskPoint -= (s.velocity > -1 ? s.velocity : average);
+
+    if (remainingTaskPoint < 0) {
+      remainingTaskPoint = 0;
     }
+
+    return remainingTaskPoint;
   });
+};
 
-  const subtractArr = tmpArr.slice(0, maxsprint + 1);
-  for (let i = 1; ;i += 1) {
-    if (subtractArr[i]) {
-      const reduce = subtractArr.slice(i, i + 1).reduce((acc, num) => acc + num);
-      remainingTaskPoint -= reduce;
-      chartDatas.push(remainingTaskPoint);
-    } else {
-      remainingTaskPoint -= average;
-      chartDatas.push(remainingTaskPoint);
-    }
-
-    if (remainingTaskPoint - average < 0) {
-      chartDatas.push(0);
-      break;
-    }
-  }
-
-  return chartDatas;
+const option = {
+  scales: {
+    yAxes: [{
+      ticks: {
+        beginAtZero: true,
+      },
+    }],
+  },
 };
 
 const AppLineChart = () => {
@@ -57,10 +51,8 @@ const AppLineChart = () => {
   const sprints = useSprints();
 
   // chart datas(plan)
-  const labels = sprints.map((sprint, index) => `Sprint${index}`);
-  const totalPoint = tasks.map(t=>t.point).reduce((sum, n) => sum + n, 0);
-  const average = velocityAverageHelper(sprints);
-  const chartDatas = chartDataHelper(average, totalPoint, tasks);
+  const labels = sprints.map((s) => `Sprint${s.id}`);
+  const chartDatas = chartDataHelper(tasks, sprints);
 
   const data = {
     labels,
@@ -75,16 +67,6 @@ const AppLineChart = () => {
       ],
       borderWidth: 1,
     }],
-  };
-
-  const option = {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-        },
-      }],
-    },
   };
 
   return (
