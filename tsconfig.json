@@ -21,7 +21,8 @@
     "typeRoots": [
       "./node_modules/@types",
       "./src/@types"
-    ]
+    ],
+    "baseUrl": "./src/"
   },
   "include": [
     "src"
