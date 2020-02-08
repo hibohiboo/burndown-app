@@ -1,6 +1,6 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import sprintModule, { useSprints } from '../modules/sprintModule';
+import { useDispatch } from 'react-redux';
+import { useSprints } from '../modules/sprintModule';
 import taskModule, { useTasks } from '../modules/taskModule';
 import COLORS from '../constants/tag-colors';
 import '../css/AppTaskTable.css';
@@ -10,7 +10,7 @@ const AppTaskTable = () => {
   const tasks = useTasks();
   const sprints = useSprints();
   const {addTask, editTask, deleteTask} = taskModule.actions;
-  const {addSprint, editSprint, deleteSprint} = sprintModule.actions;
+
   const initTask = {
     title: '',
     id:0,

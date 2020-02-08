@@ -12,7 +12,7 @@ const sprintModule = createSlice({
   name: "sprints",
   initialState,
   reducers: {
-    addSprint: (state, action: PayloadAction<Sprint>) => {
+    addSprint: (state, action: PayloadAction) => {
       state.push({
         id: getSprintIDHelper(state),
         start: null,
@@ -26,7 +26,9 @@ const sprintModule = createSlice({
       const p = action.payload;
       return state.map(t=>t.id === p.id ? p : t); 
     },
-    deleteSprint: (state, action: PayloadAction<Sprint>) => state.filter((data) => (data.id !== action.payload.id)),
+    deleteLastSprint: (state, action: PayloadAction) => {
+      state.pop();
+    }
   }
 });
 
