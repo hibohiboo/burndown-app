@@ -23,6 +23,7 @@ const customStyles = {
   },
 };
 
+
 const AppTaskBoardView = () => {
   const dispatch = useDispatch();
   const tasks = useTasks();
@@ -61,7 +62,19 @@ const AppTaskBoardView = () => {
     setIsOpen(true);
   };
 
+  
+const initTask = {
+  title: '',
+  id:0,
+  point: 0,
+  sprint: null,
+  tag: 'draggable-gray',
+  position: { x: (0 - 142 * tasks.length), y: 0 }, // width(140) + border-left(1) + border-right(1) = 142
+};
 
+  const handleAddTask = () => {
+    dispatch(addTask(initTask));
+  }
   return (
     <div className="task-board">
 
@@ -71,7 +84,7 @@ const AppTaskBoardView = () => {
           role="button"
           tabIndex={0}
           className="controller-item"
-          onClick={addTask}
+          onClick={handleAddTask}
         >
           タスクの追加
         </div>

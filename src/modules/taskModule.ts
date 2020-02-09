@@ -17,7 +17,6 @@ const taskModule = createSlice({
     },
     editTask: (state, action: PayloadAction<Task>) => {
       const p = action.payload;
-      console.log('pay', p)
       return state.map(t=>t.id === p.id ? p : t); 
     },
     deleteTask: (state, action: PayloadAction<Task>) => state.filter((data) => (data.id !== action.payload.id)),
