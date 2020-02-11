@@ -20,6 +20,7 @@ const taskModule = createSlice({
       return state.map(t=>t.id === p.id ? p : t); 
     },
     deleteTask: (state, action: PayloadAction<Task>) => state.filter((data) => (data.id !== action.payload.id)),
+    addTasks: (state, action: PayloadAction<Task[]>) => action.payload,
   }
 });
 

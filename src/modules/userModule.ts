@@ -2,8 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { AppThunk } from '../store';
 import Board from '../api/board';
-
-const { loginBoard } = Board;
+import { fetchFirestore } from '../actions';
 
 type User = {
   uid: string;
@@ -24,6 +23,7 @@ const userModule = createSlice({
 
 export default userModule;
 
+
 export const useUser = () => {
   return useSelector((state: { user: ReturnType<typeof userModule.reducer> }) => state.user);
 }
@@ -42,6 +42,9 @@ export const {
   setBoard,
 } = userModule.actions;
 
+export const key = 'burndown-app';
+export const collectionName = 'items';
+const { loginBoard } = Board;
 export const fetchLoginBoard = (
   board: string,
   pass: string
@@ -49,7 +52,11 @@ export const fetchLoginBoard = (
   try {
     const result = await loginBoard(board, pass);
     dispatch(setAuth(result));
-    dispatch(setBoard(board));
+
+    if (result) {
+      dispatch(setBoard(board));
+      dispatch(fetchFirestore(collectionName, key, board));
+    }
   } catch (err) {
     dispatch(setAuth(false));
   }

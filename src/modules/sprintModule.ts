@@ -45,7 +45,8 @@ const sprintModule = createSlice({
     },
     deleteLastSprint: (state, action: PayloadAction) => {
       state.pop();
-    }
+    },
+    addSprints: (state, action: PayloadAction<Sprint[]>) => action.payload,
   }
 });
 
