@@ -6,8 +6,13 @@ import Helmet from 'react-helmet';
 import AppBurnDownView from './burndown/AppBurnDownView';
 import AppVelocityView from './AppVelocityView';
 import AppTaskBoardView from './taskborad/AppTaskBoardView';
+import AppLogin from './AppLogin';
+import { useAuthed, useBoard } from '../modules/userModule';
 
 const App: React.FC = () => {
+  const authed = useAuthed();
+  const board = useBoard();
+
   return   <div className="App">
   <Helmet>
     <meta charSet="utf-8" />
@@ -15,33 +20,58 @@ const App: React.FC = () => {
     <title>BurnDown App</title>
   </Helmet>
   <Router>
+  {authed && (
     <header>
-      <Link to="/burndown">BurnDown</Link>
+      <Link to={`/board/${board}/burndown`}>BurnDown</Link>
       |
-      <Link to="/velocity">Velocity</Link>
+      <Link to={`/board/${board}/velocity`}>Velocity</Link>
       |
-      <Link to="/taskboard">TaskBoard</Link>
+      <Link to={`/board/${board}/taskboard`}>TaskBoard</Link>
     </header>
-    <Switch>
-
-      <Route exact path="/">
-        <Redirect to="/burndown" />
-      </Route>
-      <Route path="/burndown">
-        <AppBurnDownView />
-      </Route>
-      <Route path="/velocity">
-        <AppVelocityView />
-      </Route>
-      <Route path="/taskboard">
-        <AppTaskBoardView />
-        </Route>
-      <Route path="/*">
-        <p>404</p>
-      </Route>
-    </Switch>
+  )}
+        <Switch>
+          <Route path="/board/:boardId/login" component={AppLogin} />
+          <PrivateRoute exact authed={authed} path="/board/:boardId/">
+            <Redirect to="burndown" />
+          </PrivateRoute>
+          <PrivateRoute authed={authed} path="/board/:boardId/burndown">
+            <AppBurnDownView />
+          </PrivateRoute>
+          <PrivateRoute authed={authed} path="/board/:boardId/velocity">
+            <AppVelocityView />
+          </PrivateRoute>
+          <PrivateRoute authed={authed} path="/board/:boardId/taskboard">
+            <AppTaskBoardView />
+          </PrivateRoute>
+          <Route path="/*">
+            <p>404</p>
+          </Route>
+        </Switch>
   </Router>
 </div>;
 };
 
 export default App;
+
+function PrivateRoute(prop: any) {
+  const {
+    children, authed, computedMatch, ...rest
+  } = prop;
+
+  return (
+    <Route
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...rest}
+      render={({ location }) => (authed ? (
+        children
+      ) : (
+          <Redirect
+            to={{
+              pathname: `/board/${computedMatch.params.boardId}/login`,
+              state: { from: location },
+            }}
+          />
+        ))}
+    />
+  );
+}

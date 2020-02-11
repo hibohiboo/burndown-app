@@ -13,7 +13,7 @@ import { loginUi, auth } from './firebase';
 library.add(fab, fas, far);
 
 const init = (uid: string) => {
-  store.dispatch(userModule.actions.setUser({ uid }));
+  store.dispatch(userModule.actions.setUser({ uid, authed: false, board: '' }));
   render(
     <Provider store={store}>
       <App />

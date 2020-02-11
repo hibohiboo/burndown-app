@@ -60,32 +60,32 @@ export default function storeState(paths: string[], config: any) {
     const store = next(reducer, initialState, enhancer);
     const slicerFn = slicer(paths);
 
-    // // DBを監視
-    let unsubscribe;
-    let isFirst = true;
-    try {
-      unsubscribe = db.collection(collectionName).doc(key)
-        .collection('board').doc('white')
-        .onSnapshot((doc) => {
-          // 変更があった時にデータが返される
-          const { sprints, datas, updatedUid } = doc.data() as any;
-          if (sprints && datas) {
-            const payload = { sprints, datas, updatedUid };
-            const state = store.getState();
+    // // // DBを監視
+    // let unsubscribe;
+    // let isFirst = true;
+    // try {
+    //   unsubscribe = db.collection(collectionName).doc(key)
+    //     .collection('board').doc('white')
+    //     .onSnapshot((doc) => {
+    //       // 変更があった時にデータが返される
+    //       const { sprints, datas, updatedUid } = doc.data() as any;
+    //       if (sprints && datas) {
+    //         const payload = { sprints, datas, updatedUid };
+    //         const state = store.getState();
 
-            // 自身の更新を再度投げないようにブロック
-            if (isFirst || updatedUid !== state.loginUser.uid) {
-              store.dispatch({ type: 'UPDATE_DATA', payload });
-              isFirst = false;
-            }
-          }
-        });
-    } catch (e) {
-      if(unsubscribe){
-        unsubscribe();
-      }
-      console.warn(e);
-    }
+    //         // 自身の更新を再度投げないようにブロック
+    //         if (isFirst || updatedUid !== state.loginUser.uid) {
+    //           store.dispatch({ type: 'UPDATE_DATA', payload });
+    //           isFirst = false;
+    //         }
+    //       }
+    //     });
+    // } catch (e) {
+    //   if(unsubscribe){
+    //     unsubscribe();
+    //   }
+    //   console.warn(e);
+    // }
 
     store.subscribe(() => {
       const state = store.getState();
