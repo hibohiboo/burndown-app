@@ -8,16 +8,33 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
 import store from './store';
-
+import userModule from './modules/userModule';
+import { loginUi, auth } from './firebase';
 library.add(fab, fas, far);
 
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>
-  ,
-  document.getElementById('root'),
-);
+const init = (uid: string) => {
+  store.dispatch(userModule.actions.setUser({ uid }));
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+    ,
+    document.getElementById('root'),
+  );
+}
+
+// 認証済かチェック
+auth.onAuthStateChanged((payload) => {
+  if (!payload) {
+    loginUi(auth);
+    return;
+  }
+  const { uid } = payload;
+
+  // 認証していたらレンダリング
+  init(uid);
+});
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
