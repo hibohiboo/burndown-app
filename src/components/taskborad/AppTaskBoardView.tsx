@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AppModalView from './AppModalView';
 import taskModule, { useTasks } from '../../modules/taskModule';
-import currentTaskModule, { useCurrentTask } from '../../modules/currentTaskModule';
-import { useSprints } from '../../modules/sprintModule';
+import currentTaskModule from '../../modules/currentTaskModule';
 import { Task } from '../../@types/task';
 
 import '../../css/AppTaskBoardView.css';
@@ -27,7 +26,6 @@ const customStyles = {
 const AppTaskBoardView = () => {
   const dispatch = useDispatch();
   const tasks = useTasks();
-  const sprints = useSprints();
   const {addTask, editTask, deleteTask} = taskModule.actions;
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isDrag, setIsDrag] = useState(false);

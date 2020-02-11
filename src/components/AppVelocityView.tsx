@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import moment from 'moment';
 import sprintModule, { useSprints, calcPlanningPoint, calcNormarizedVelocity, calcVelocityAverage } from '../modules/sprintModule';
 import '../css/AppVelocityView.css';
 
@@ -39,7 +38,7 @@ const TableHeader = () => (
 const AppVelocityView = () => {
   const dispatch = useDispatch();
   const sprints = useSprints();
-  const {addSprint, editSprint} = sprintModule.actions;
+  const {editSprint} = sprintModule.actions;
 
   return (
     <div className="velocity-layout">

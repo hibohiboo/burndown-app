@@ -20,7 +20,7 @@ const AppModalView: React.FC<{deleteModal: (task: Task) => void }> = (props) => 
       deleteModal(task);
       setDelete(false);
     }
-  });
+  }, [del, task, deleteModal]);
 
   if (!task) {
     return <div>読込失敗</div>;
