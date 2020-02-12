@@ -2,6 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { Task } from '../@types/task';
 
+export const initTask = {
+  title: '',
+  detail: '',
+  id:0,
+  point: 0,
+  sprint: null,
+  tag: 'draggable-gray',
+  position: { x: 0, y: 0 },
+};
+
 // id auto increment
 const getTaskIDHelper = (tasks:Task[]):number => (tasks.map(t=>t.id).reduce((prev, current)=> (prev > current ? prev : current), 0 ) + 1);
 

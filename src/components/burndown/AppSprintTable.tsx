@@ -11,15 +11,19 @@ const AppSprintTable = () => {
   return (
     <>
       <div className="app-sprint-table">
+      <div className="app-sprint-col">
+          <p>Period</p>
+          <p>Velocity</p>
+        </div>
         {sprints.map((sprint) => (
-          <div className="col" key={`sprint-table-sprint-${sprint.id}`}>
+          <div className="app-sprint-col" key={`sprint-table-sprint-${sprint.id}`}>
             <p>{`Sprint${sprint.id}`}</p>
             <input type="number" value={sprint.velocity < 0 ? '' : sprint.velocity} onChange={(e)=>dispatch(editSprint({...sprint, velocity: Number(e.target.value)}))} />
           </div>
         ))}
       </div>
-      <button type="button" onClick={()=>dispatch(sprints.length === 0 ? addFirstSprint(moment().format('YYYY-MM-DD')) : addSprint())}>Sprintを追加</button>
-      <button type="button" onClick={()=>dispatch(deleteLastSprint())} disabled={sprints.length < 5}>Sprintを減らす</button>
+      <button type="button" className="sprint-plus-button" onClick={()=>dispatch(sprints.length === 0 ? addFirstSprint(moment().format('YYYY-MM-DD')) : addSprint())}>Sprintを追加</button>
+      <button type="button" className="sprint-minus-button" onClick={()=>dispatch(deleteLastSprint())} disabled={sprints.length < 5}>Sprintを減らす</button>
     </>
   );
 };

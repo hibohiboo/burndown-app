@@ -25,6 +25,7 @@ const chartDataHelper = (tasks: Task[], sprints: Sprint[]) => {
 
 const option = {
   scales: {
+    maintainAspectRatio: false,
     yAxes: [{
       ticks: {
         beginAtZero: true,

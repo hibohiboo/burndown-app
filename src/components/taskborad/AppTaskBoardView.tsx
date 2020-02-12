@@ -60,15 +60,15 @@ const AppTaskBoardView = () => {
     setIsOpen(true);
   };
 
-  
-const initTask = {
-  title: '',
-  id:0,
-  point: 0,
-  sprint: null,
-  tag: 'draggable-gray',
-  position: { x: (0 - 142 * tasks.length), y: 0 }, // width(140) + border-left(1) + border-right(1) = 142
-};
+  const initTask = {
+    title: '',
+    detail: '',
+    id:0,
+    point: 0,
+    sprint: null,
+    tag: 'draggable-gray',
+    position: { x: (0 - 142 * tasks.length), y: 0 }, // width(140) + border-left(1) + border-right(1) = 142
+  };
 
   const handleAddTask = () => {
     dispatch(addTask(initTask));
@@ -91,14 +91,15 @@ const initTask = {
       {/* Tag Items */}
       {tasks.map((task, index) => (
         <Draggable
-          key={`task-board-view-task-wrapper-${task.id}`}
+          key={task.id}
           defaultPosition={task.position}
           position={task.position}
           onStop={(e, data)=>onStop(e, data, task)}
           onDrag={onDrag}
         >
           <div
-            key={`task-board-view-task-${task.id}`}
+            id={`task-board-view-task-${task.id}`}
+            key={task.id}
             className={task.tag}
             onClick={() => handleClickEvent(task)}
             role="button"
@@ -122,7 +123,7 @@ const initTask = {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <AppModalView deleteModal={deleteModal} />
+        <AppModalView deleteModal={deleteModal} closeModal={closeModal} />
       </Modal>
 
     </div>

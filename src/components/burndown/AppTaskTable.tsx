@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSprints } from '../../modules/sprintModule';
-import taskModule, { useTasks } from '../../modules/taskModule';
+import taskModule, { useTasks, initTask } from '../../modules/taskModule';
 import COLORS from '../../constants/tag-colors';
 import '../../css/AppTaskTable.css';
 
@@ -11,14 +11,6 @@ const AppTaskTable = () => {
   const sprints = useSprints();
   const {addTask, editTask, deleteTask} = taskModule.actions;
 
-  const initTask = {
-    title: '',
-    id:0,
-    point: 0,
-    sprint: null,
-    tag: 'draggable-gray',
-    position: { x: 0, y: 0 },
-  };
   return (
     <>
       <div className="app-task-table">

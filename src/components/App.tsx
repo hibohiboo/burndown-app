@@ -3,11 +3,14 @@ import {
   BrowserRouter as Router, Switch, Route, Link, Redirect,
 } from 'react-router-dom';
 import Helmet from 'react-helmet';
+import Modal from 'react-modal';
 import AppBurnDownView from './burndown/AppBurnDownView';
 import AppVelocityView from './AppVelocityView';
 import AppTaskBoardView from './taskborad/AppTaskBoardView';
 import AppLogin from './AppLogin';
 import { useAuthed, useBoard } from '../modules/userModule';
+
+Modal.setAppElement('#root');
 
 const App: React.FC = () => {
   const authed = useAuthed();
