@@ -23,7 +23,7 @@ export const fetchFirestore = (
             const state = getState();
 
             // 自身の更新を再度投げないようにブロック
-            if (isFirst && state.user|| (state.user && updatedUid !== state.user.uid)) {
+            if ((isFirst && state.user) || (state.user && updatedUid !== state.user.uid)) {
               dispatch(updatedUidModule.actions.setUpdatedUid(updatedUid));
               dispatch(taskModule.actions.addTasks(tasks));
               dispatch(sprintModule.actions.addSprints(sprints));

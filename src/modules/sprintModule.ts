@@ -62,7 +62,7 @@ export const useLatestSprints = () => {
 
 export const calcNormarizedVelocity = (sprint: Sprint) => {
   if (sprint.velocity < 0) throw new Error(`unexpected args. velocity: ${sprint.velocity}.`);
-  if (!sprint.resultCapacity) return sprint.velocity;
+  if (sprint.resultCapacity <= 0) return sprint.velocity;
 
   return Math.round(sprint.velocity / sprint.resultCapacity);
 };
@@ -76,16 +76,19 @@ export const calcVelocityAverage = (sprints: Sprint[]): number => {
     return 0;
   }
   const sum = latests.map(calcNormarizedVelocity).reduce((sum, n) => sum + n, 0);
+  console.log(sum, latests.length);
   return Math.round(sum / latests.length);
 };
 
 
 export const calcPlanningPoint = (sprints: Sprint[]) => {
-  const latests = sprints.slice(-latestNumber);
-  if (latests.length === 0) {
+  const latests = sprints.slice(-latestNumber-1); // 最新の一つ前までのプランを取得
+  const length = latests.length;
+  if (length === 0) {
     return 0;
   }
-  const average = calcVelocityAverage(latests);
-  const capacity = latests[latests.length-1].planningCapacity;
+
+  const average = calcVelocityAverage(latests.slice(0, length -1 )); // 最新の1つ前までの平均を算出
+  const capacity = latests[length-1].planningCapacity;
   return Math.round(average * capacity);
 };
