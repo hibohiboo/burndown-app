@@ -46,9 +46,16 @@ const sprintModule = createSlice({
     deleteLastSprint: (state, action: PayloadAction) => {
       state.pop();
     },
-    addSprints: (state, action: PayloadAction<Sprint[]>) => action.payload,
+    addSprints: (state, action: PayloadAction<Sprint[]>) => action.payload.map(s=>(
+      {
+        ...s,
+        planningCapacity: Number(s.planningCapacity),
+        resultCapacity: Number(s.resultCapacity),
+        velocity: Number(s.velocity)
+       })),
   }
 });
+
 
 export default sprintModule;
 
@@ -62,7 +69,7 @@ export const useLatestSprints = () => {
 
 export const calcNormarizedVelocity = (sprint: Sprint) => {
   if (sprint.velocity < 0) throw new Error(`unexpected args. velocity: ${sprint.velocity}.`);
-  if (sprint.resultCapacity <= 0) return sprint.velocity;
+  if (sprint.resultCapacity <= 0) return 0;
 
   return Math.round(sprint.velocity / sprint.resultCapacity);
 };
@@ -84,7 +91,7 @@ export const calcVelocityAverage = (sprints: Sprint[]): number => {
 export const calcPlanningPoint = (sprints: Sprint[]) => {
   const latests = sprints.slice(-latestNumber-1); // 最新の一つ前までのプランを取得
   const length = latests.length;
-  if (length === 0) {
+  if (length === 0 || length === 1) {
     return 0;
   }
 
